@@ -12,7 +12,6 @@ public class Board {
 
     public Board(final List<List<Space>> spaces) { this.spaces = spaces; }
     public Space getSpace(int row, int col) { return spaces.get(col).get(row); }
-    public List<List<Space>> getSpaces() { return spaces; }
 
     public GameStatusEnum getStatus() {
         if (spaces.stream().flatMap(Collection::stream).noneMatch(s -> !s.isFixed() && nonNull(s.getActual()))) {
@@ -29,4 +28,12 @@ public class Board {
 
     public void reset() { spaces.forEach(c -> c.forEach(Space::clearSpace)); }
     public boolean gameIsFinished() { return !hasErrors() && getStatus().equals(COMPLETE); }
+
+    public void solve() {
+        spaces.forEach(column -> column.forEach(space -> {
+            if (!space.isFixed()) {
+                space.setActual(space.getExpected());
+            }
+        }));
+    }
 }

@@ -30,13 +30,13 @@ public class BoardService {
 
     private static Board parseBoard(Map<String, String> positions) {
         List<List<Space>> spaces = new ArrayList<>();
-        for (int i = 0; i < BOARD_LIMIT; i++) {
+        for (int col = 0; col < BOARD_LIMIT; col++) {
             spaces.add(new ArrayList<>());
-            for (int j = 0; j < BOARD_LIMIT; j++) {
-                var positionConfig = positions.get("%s,%s".formatted(i, j));
+            for (int row = 0; row < BOARD_LIMIT; row++) {
+                var positionConfig = positions.get("%s,%s".formatted(row, col));
                 var expected = Integer.parseInt(positionConfig.split(",")[0]);
                 var fixed = Boolean.parseBoolean(positionConfig.split(",")[1]);
-                spaces.get(i).add(new Space(expected, fixed));
+                spaces.get(col).add(new Space(expected, fixed));
             }
         }
         return new Board(spaces);
@@ -48,13 +48,20 @@ public class BoardService {
                 {8, 0, 0, 0, 6, 0, 0, 0, 3}, {4, 0, 0, 8, 0, 3, 0, 0, 1}, {7, 0, 0, 0, 2, 0, 0, 0, 6},
                 {0, 6, 0, 0, 0, 0, 2, 8, 0}, {0, 0, 0, 4, 1, 9, 0, 0, 5}, {0, 0, 0, 0, 8, 0, 0, 7, 9}
         };
+        int[][] solution = {
+                {5,3,4,6,7,8,9,1,2}, {6,7,2,1,9,5,3,4,8}, {1,9,8,3,4,2,5,6,7},
+                {8,5,9,7,6,1,4,2,3}, {4,2,6,8,5,3,7,9,1}, {7,1,3,9,2,4,8,5,6},
+                {9,6,1,5,3,7,2,8,4}, {2,8,7,4,1,9,6,3,5}, {3,4,5,2,8,6,1,7,9}
+        };
+
         List<List<Space>> spaces = new ArrayList<>();
-        for (int i = 0; i < BOARD_LIMIT; i++) {
+        for (int col = 0; col < BOARD_LIMIT; col++) {
             spaces.add(new ArrayList<>());
-            for (int j = 0; j < BOARD_LIMIT; j++) {
-                int expected = template[j][i];
-                boolean isFixed = expected != 0;
-                spaces.get(i).add(new Space(expected, isFixed));
+            for (int row = 0; row < BOARD_LIMIT; row++) {
+                int initialValue = template[row][col];
+                int expectedValue = solution[row][col];
+                boolean isFixed = initialValue != 0;
+                spaces.get(col).add(new Space(expectedValue, isFixed));
             }
         }
         return new Board(spaces);

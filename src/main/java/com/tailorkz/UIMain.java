@@ -4,7 +4,6 @@ package com.tailorkz;
 import com.tailorkz.model.Board;
 import com.tailorkz.service.BoardService;
 import com.tailorkz.ui.custom.frame.MainFrame;
-
 import javax.swing.*;
 
 public class UIMain {
